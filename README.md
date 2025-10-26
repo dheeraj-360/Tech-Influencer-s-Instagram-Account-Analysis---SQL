@@ -1,1 +1,1 @@
-# Tech-Influencer-s-Instagram-Account-Analysis---SQL
+# Tech Influencer's Instagram Account Analysis - SQL
