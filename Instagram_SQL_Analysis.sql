@@ -7,6 +7,11 @@ select * from fact_content;
 
 select DISTINCT post_type from fact_content;
 
+
+select post_type, count(1) as no_of_posts from fact_content
+GROUP BY post_type
+order by no_of_posts desc;
+
 -- What are the highest and lowest recorded impressions for each post type?
 
 select post_type, MIN(impressions) as Lowest_recorded_Impressions , MAX(impressions) as Highest_recorded_impressions
@@ -92,6 +97,24 @@ dim_dates d INNER JOIN
 fact_content c ON d.date = c.date
 where d.week_no = "W1"
 group by c.post_type;
+
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_total_shares_by_week`(
+			IN in_week_num VARCHAR(2)
+)
+BEGIN
+	select c.post_type , SUM(shares) as total_shares from 
+dim_dates d INNER JOIN
+fact_content c ON d.date = c.date
+where d.week_no = in_week_num
+group by c.post_type;
+
+END
+
+
+
 
 CALL get_total_shares_by_week("W2");
 
